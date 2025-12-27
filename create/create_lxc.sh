@@ -5,7 +5,6 @@ read -p "Enter Container ID (e.g., 100): " CT_ID
 read -p "Enter Container Hostname: " HOSTNAME
 read -p "Enter Container Password: " PASSWORD
 
-
 # Safety check for IP
 if [ "$CT_ID" -gt 254 ]; then
     echo "WARNING: Container ID $CT_ID exceeds 254."
