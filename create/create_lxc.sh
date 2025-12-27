@@ -53,7 +53,7 @@ echo "--- Running apt update & upgrade... ---"
 pct exec $CT_ID -- bash -c "apt-get update && apt-get upgrade -y"
 
 echo "--- Installing git, btop, htop, wget, curl... ---"
-pct exec $CT_ID -- bash -c "apt-get install -y git btop htop wget curl"
+pct exec $CT_ID -- bash -c "apt-get install -y git sudo btop htop wget curl"
 
 echo "--- Installing Docker... ---"
 pct exec $CT_ID -- bash -c "curl -fsSL https://get.docker.com | sh"
