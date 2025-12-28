@@ -21,7 +21,7 @@ read -p "Auto enter container? (y/N): " AUTO_ENTER
 
 STORAGE="local-lvm"
 TEMPLATE="local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
-MEMORY=2048
+MEMORY=1024
 SWAP=512
 CORES=2
 
