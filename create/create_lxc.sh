@@ -39,10 +39,15 @@ pct create $CT_ID $TEMPLATE \
     --memory $MEMORY \
     --swap $SWAP \
     --cores $CORES \
-    --net0 name=eth0,bridge=$NETWORK_BRIDGE,ip=$IP_ADDRESS,gw=$GATEWAY,type=veth \
+    --net0 name=eth0,bridge=$NETWORK_BRIDGE,ip=$IP_ADDRESS,gw=$GATEWAY,type=veth,firewall=1 \
     --nameserver $DNS_SERVER \
     --features nesting=1,keyctl=1 \
     --unprivileged 1
+
+cat <<EOF >> /etc/pve/firewall/$CT_ID.fw
+[RULES]
+GROUP Isolated
+EOF
 
 pct start $CT_ID
 
