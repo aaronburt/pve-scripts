@@ -16,6 +16,7 @@ fi
 
 read -p "Enter Container Hostname: " HOSTNAME
 read -p "Enter Container Password: " PASSWORD
+read -p "Auto enter container? (y/N): " AUTO_ENTER
 
 
 STORAGE="local-lvm"
@@ -24,11 +25,11 @@ MEMORY=2048
 SWAP=512
 CORES=2
 
-# Network Configuration
 GATEWAY="10.0.0.1"
 DNS_SERVER="1.1.1.1"
 IP_ADDRESS="10.0.0.${CT_ID}/24"
 NETWORK_BRIDGE="vnet0"
+FIREWALL=1
 
 echo "--- Starting Auto-Provisioning for CT $CT_ID ---"
 echo "--- Network: $IP_ADDRESS | GW: $GATEWAY | DNS: $DNS_SERVER ---"
@@ -41,7 +42,7 @@ pct create $CT_ID $TEMPLATE \
     --memory $MEMORY \
     --swap $SWAP \
     --cores $CORES \
-    --net0 name=eth0,bridge=$NETWORK_BRIDGE,ip=$IP_ADDRESS,gw=$GATEWAY,type=veth,firewall=1 \
+    --net0 name=eth0,bridge=$NETWORK_BRIDGE,ip=$IP_ADDRESS,gw=$GATEWAY,type=veth,firewall=$FIREWALL \
     --nameserver $DNS_SERVER \
     --features nesting=1,keyctl=1 \
     --unprivileged 1
@@ -70,3 +71,7 @@ pct exec $CT_ID -- bash -c "useradd -m -s /bin/bash -G docker docker-svc"
 
 echo "--- Setup Complete for $HOSTNAME ($CT_ID) ---"
 echo "--- Access via: ssh root@${IP_ADDRESS%/*} ---"
+
+if([[ "$AUTO_ENTER" == "y" || "$AUTO_ENTER" == "Y" ]]); then
+    pct enter $CT_ID
+fi
