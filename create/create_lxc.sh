@@ -2,8 +2,6 @@
 
 # Prompt for Container ID and Hostname
 read -p "Enter Container ID (e.g., 100): " CT_ID
-read -p "Enter Container Hostname: " HOSTNAME
-read -p "Enter Container Password: " PASSWORD
 
 # Safety check for IP
 if [ "$CT_ID" -gt 254 ]; then
@@ -15,6 +13,10 @@ if [ "$CT_ID" -gt 254 ]; then
         exit 1
     fi
 fi
+
+read -p "Enter Container Hostname: " HOSTNAME
+read -p "Enter Container Password: " PASSWORD
+
 
 STORAGE="local-lvm"
 TEMPLATE="local:vztmpl/debian-13-standard_13.1-2_amd64.tar.zst"
